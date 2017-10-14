@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "320049293697",
+    "firebase_url": "https://estimateepro.firebaseio.com",
+    "project_id": "estimateepro",
+    "storage_bucket": "estimateepro.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320049293697:android:e1c19e4db3e603ec",
+        "android_client_info": {
+          "package_name": "com.suncoastsoftware.estimateepro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320049293697-4vo1bmcs4jmd2mav14q5d7cmj69f4439.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.suncoastsoftware.estimateepro",
+            "certificate_hash": "21c30fb4e8c51469b220d2a5209d332d325e1445"
+          }
+        },
+        {
+          "client_id": "320049293697-kon8q6oodljtlh81keobh9rrk94g66b2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.suncoastsoftware.estimateepro",
+            "certificate_hash": "d58b7dbf8445ef723cacda5964991ddfc3525370"
+          }
+        },
+        {
+          "client_id": "320049293697-v912bq1vuajptsieah1plo0ma4vh58kp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbZbHQp7bf7rbQ8peZSJea7zfiHvttEMw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320049293697-v912bq1vuajptsieah1plo0ma4vh58kp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

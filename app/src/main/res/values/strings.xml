@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name"></string>
+    <string name="et_email_address">Email Address</string>
+    <string name="logo">logo</string>
+    <string name="btn_login">Login</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_search">Search</string>
+    <string name="btn_generate">Generate</string>
+    <string name="login_email">Email</string>
+    <string name="login_paasword">Password</string>
+    <string name="login_bottom_img">bottom img</string>
+    <string name="login_top_img">top img</string>
+    <string name="login_lost_password"><a href="http://www.twitter.com">Forgot Password</a></string>
+    <string name="login_create_account">Create Account</string>
+    <string name="et_email">Email</string>
+    <string name="title_activity_my_estimates">MyEstimates</string>
+    <string name="et_new_cust_custName">Customer Name</string>
+    <string name="et_new_cust_company">Company</string>
+    <string name="et_new_cust_custID">Customer ID</string>
+    <string name="et_new_cust_contact_name">Contact Name</string>
+    <string name="et_new_cust_phone">Customer Phone</string>
+    <string name="estimates">Estimates</string>
+</resources>
