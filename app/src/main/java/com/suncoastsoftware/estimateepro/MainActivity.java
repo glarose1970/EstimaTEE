@@ -90,7 +90,10 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean Valid(String input) {
 
-        return (TextUtils.isEmpty(input));
+        if (TextUtils.isEmpty(input)) {
+            return false;
+        }else
+            return true;
 
     }
 }

@@ -7,6 +7,7 @@
     <string name="btn_save">Save</string>
     <string name="btn_search">Search</string>
     <string name="btn_generate">Generate</string>
+    <string name="btn_new_estimate">New Estimate</string>
     <string name="login_email">Email</string>
     <string name="login_paasword">Password</string>
     <string name="login_bottom_img">bottom img</string>
@@ -22,6 +23,7 @@
     <string name="et_new_cust_phone">Customer Phone</string>
     <string name="estimates">Estimates</string>
     <string name="estimates_estimateID">Estimate ID</string>
+    <string name="estimates_search_customer">Search Customers</string>
     <string name="add_new_estimate">Add New Estimate</string>
     <string name="et_new_estimate_title">Title</string>
     <string name="et_new_estimate_due_date">Due Date</string>

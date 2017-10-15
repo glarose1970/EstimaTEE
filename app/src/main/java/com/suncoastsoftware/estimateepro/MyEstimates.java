@@ -85,7 +85,7 @@ public class MyEstimates extends AppCompatActivity {
 
     private List<String> LoadCustomers() {
 
-        dataRef.child("users").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+        dataRef.child("users").child(user.getUid()).child("customers").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -94,14 +94,10 @@ public class MyEstimates extends AppCompatActivity {
                     //find the companyName node and add it to the cust_list.
                     Iterable<DataSnapshot>  custChild = child.getChildren();
                     for (DataSnapshot curChild : custChild) {
-                        Iterable<DataSnapshot> thisChild = curChild.getChildren();
-                        for (DataSnapshot data : thisChild) {
-                            Customer cust = data.getValue(Customer.class);
-                            String company = cust.companyName;
-                            cust_list.add(cust);
-                            company_list.add(company);
-                        }
-
+                        Customer cust = curChild.getValue(Customer.class);
+                        String company = cust.companyName;
+                        cust_list.add(cust);
+                        company_list.add(company);
                     }
                 }
 
