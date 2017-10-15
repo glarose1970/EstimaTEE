@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Unable to Login!!!", Toast.LENGTH_SHORT).show();
                         }else {
 
-                            Intent intent = new Intent(getApplicationContext(), MyEstimates.class);
+                            Intent intent = new Intent(getApplicationContext(), MainContent.class);
                             startActivity(intent);
                         }
                     }

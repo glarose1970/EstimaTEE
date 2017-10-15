@@ -2,15 +2,10 @@ package com.suncoastsoftware.estimateepro;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
+import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,7 +20,7 @@ import com.suncoastsoftware.estimateepro.model.Estimate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyEstimates extends AppCompatActivity {
+public class MainContent extends AppCompatActivity {
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser user = mAuth.getCurrentUser();
@@ -36,15 +31,37 @@ public class MyEstimates extends AppCompatActivity {
     List<String> company_list;
 
     List<Estimate> estimate_list;
+   // private TextView mTextMessage;
 
-    Button btn_search;
-    EditText et_search_query;
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_estimate:
+                   // mTextMessage.setText(R.string.title_home);
+                    return true;
+                case R.id.navigation_new_customer:
+                   // mTextMessage.setText(R.string.title_dashboard);
+                    New_Customer_Fragment newCust = new New_Customer_Fragment();
+                    android.support.v4.app.FragmentTransaction fTransaction = getSupportFragmentManager().beginTransaction();
+                    fTransaction.replace(R.id.content, newCust);
+                    fTransaction.commit();
+                    return true;
+                case R.id.navigation_new_estimate:
+                   // mTextMessage.setText(R.string.title_notifications);
+                    return true;
+            }
+            return false;
+        }
+
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_estimates);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.main_content);
 
         cust_list = new ArrayList<>();
         company_list = new ArrayList<>();
@@ -54,33 +71,9 @@ public class MyEstimates extends AppCompatActivity {
         LoadCustomers();
         LoadEstimates();
 
-        et_search_query = (EditText) findViewById(R.id.estimates_et_search);
-
-        btn_search = (Button) findViewById(R.id.estimates_btn_search);
-        btn_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        Spinner spin_customers = (Spinner) findViewById(R.id.spin_customers);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(MyEstimates.this, android.R.layout.simple_list_item_1, company_list);
-        spin_customers.setAdapter(adapter);
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_person));
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Add New Customer", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-                NewCustomerIntent();
-
-            }
-        });
+       // mTextMessage = (TextView) findViewById(R.id.message);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
     private List<String> LoadCustomers() {
@@ -143,4 +136,5 @@ public class MyEstimates extends AppCompatActivity {
 
         return estimate_list;
     }
+
 }

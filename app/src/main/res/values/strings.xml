@@ -36,6 +36,15 @@
     <string name="et_new_estimate_screen_charge">Screen Charge</string>
     <string name="et_new_estimate_num_colors">Number of Colors</string>
     <string name="et_new_estimate_print_both_sides">2 Sided Print</string>
-    <string name="et_new_estimate_total_price">Toatal Price</string>
+    <string name="et_new_estimate_total_price">Total Price</string>
     <string name="btn_new_estimate_calculate">Calculate</string>
+    <string name="row_item_tv_title">Estimate Title</string>
+    <string name="title_activity_estimates">activity_estimates</string>
+    <string name="fragment_estimates">Estimates</string>
+    <string name="fragment_new_customer">New Customer</string>
+    <string name="fragment_new_estimate">New estimate</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_estimates"
+        android:icon="@drawable/ic_new_estimate"
+        android:title="Estimates">
+    </item>
+
+    <item
+        android:id="@+id/menu_new_customer"
+        android:icon="@drawable/ic_add_person"
+        android:title="New Customer">
+    </item>
+
+</menu>
