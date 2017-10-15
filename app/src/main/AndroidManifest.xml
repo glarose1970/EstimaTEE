@@ -9,10 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-        <uses-permission-sdk-23 android:name="android.permission.READ_EXTERNAL_STORAGE"
-            android:maxSdkVersion="18"/>
+        <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        <uses-permission-sdk-23
+            android:name="android.permission.READ_EXTERNAL_STORAGE"
+            android:maxSdkVersion="18" />
         <uses-permission-sdk-23 android:name="android.permission.STORAGE" />
 
         <activity android:name=".MainActivity">
@@ -26,11 +26,10 @@
             android:name=".MyEstimates"
             android:label="Estimates"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Activity_New_Customer"
-            android:label="Add New Customer"/>
-
+            android:label="Add New Customer" />
+        <activity android:name=".Activity_New_Estimate"></activity>
     </application>
 
 </manifest>

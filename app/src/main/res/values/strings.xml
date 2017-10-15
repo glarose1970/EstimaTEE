@@ -21,4 +21,19 @@
     <string name="et_new_cust_contact_name">Contact Name</string>
     <string name="et_new_cust_phone">Customer Phone</string>
     <string name="estimates">Estimates</string>
+    <string name="estimates_estimateID">Estimate ID</string>
+    <string name="add_new_estimate">Add New Estimate</string>
+    <string name="et_new_estimate_title">Title</string>
+    <string name="et_new_estimate_due_date">Due Date</string>
+    <string name="et_new_estimate_shirt_sizes">Shirt Sizes</string>
+    <string name="et_new_estimate_description">Description</string>
+    <string name="et_new_estimate_notes">Notes</string>
+    <string name="et_new_estimate_quantity">Quantity</string>
+    <string name="et_new_estimate_shop_base_charge">Shop Base Charge</string>
+    <string name="et_new_estimate_per_piece_price">Per Piece Charge</string>
+    <string name="et_new_estimate_screen_charge">Screen Charge</string>
+    <string name="et_new_estimate_num_colors">Number of Colors</string>
+    <string name="et_new_estimate_print_both_sides">2 Sided Print</string>
+    <string name="et_new_estimate_total_price">Toatal Price</string>
+    <string name="btn_new_estimate_calculate">Calculate</string>
 </resources>
