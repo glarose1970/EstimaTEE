@@ -69,7 +69,7 @@
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/et_new_cust_company"
+            android:id="@+id/fragment_et_new_cust_company"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/et_new_cust_company"
@@ -81,14 +81,14 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/et_new_cust_custID"
+                android:id="@+id/fragment_et_new_cust_custID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="@string/et_new_cust_custID" />
 
             <Button
-                android:id="@+id/new_cust_btn_generate"
+                android:id="@+id/fragment_new_cust_btn_generate"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_generate"
@@ -98,14 +98,14 @@
 
 
         <EditText
-            android:id="@+id/et_new_cust_contact_name"
+            android:id="@+id/fragment_et_new_cust_contact_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/et_new_cust_contact_name"
             />
 
         <EditText
-            android:id="@+id/et_new_cust_phone"
+            android:id="@+id/fragment_et_new_cust_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/et_new_cust_phone"
@@ -119,7 +119,7 @@
             android:layout_margin="6dp">
 
             <Button
-                android:id="@+id/new_cust_btn_save"
+                android:id="@+id/fragment_new_cust_btn_save"
                 android:text="@string/btn_save"
                 android:layout_marginRight="2dp"
                 android:layout_width="match_parent"
@@ -128,7 +128,7 @@
                 android:background="@drawable/btn_rnd_corners" />
 
             <Button
-                android:id="@+id/new_cust_btn_cancel"
+                android:id="@+id/fragment_new_cust_btn_cancel"
                 android:text="@string/btn_cancel"
                 android:layout_marginLeft="2dp"
                 android:layout_width="match_parent"

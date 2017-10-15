@@ -41,6 +41,8 @@ public class MainContent extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_estimate:
                    // mTextMessage.setText(R.string.title_home);
+                    Intent mainIntent = new Intent(MainContent.this, MainContent.class);
+                    startActivity(mainIntent);
                     return true;
                 case R.id.navigation_new_customer:
                    // mTextMessage.setText(R.string.title_dashboard);
@@ -51,6 +53,10 @@ public class MainContent extends AppCompatActivity {
                     return true;
                 case R.id.navigation_new_estimate:
                    // mTextMessage.setText(R.string.title_notifications);
+                    New_Estimate_Fragment newEstimate = new New_Estimate_Fragment();
+                    android.support.v4.app.FragmentTransaction estimateTransaction = getSupportFragmentManager().beginTransaction();
+                    estimateTransaction.replace(R.id.content, newEstimate);
+                    estimateTransaction.commit();
                     return true;
             }
             return false;

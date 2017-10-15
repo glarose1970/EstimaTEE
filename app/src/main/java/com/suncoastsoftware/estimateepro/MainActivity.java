@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
                         if(!task.isSuccessful()) {
                             Toast.makeText(MainActivity.this, "Unable to Login!!!", Toast.LENGTH_SHORT).show();
                         }else {
-
                             Intent intent = new Intent(getApplicationContext(), MainContent.class);
                             startActivity(intent);
                         }
