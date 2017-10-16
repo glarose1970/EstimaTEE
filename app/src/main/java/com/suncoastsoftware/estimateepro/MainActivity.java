@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -78,7 +79,10 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(!task.isSuccessful()) {
                             Toast.makeText(MainActivity.this, "Unable to Login!!!", Toast.LENGTH_SHORT).show();
+
                         }else {
+                            String token = FirebaseInstanceId.getInstance().getToken();
+                            Log.d("NOTIFICATION TOKEN - ", "TOKEN : " + token);
                             Intent intent = new Intent(getApplicationContext(), MainContent.class);
                             startActivity(intent);
                         }

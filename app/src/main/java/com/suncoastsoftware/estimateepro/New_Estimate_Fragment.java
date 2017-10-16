@@ -6,25 +6,28 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link New_Estimate_Fragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link New_Estimate_Fragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class New_Estimate_Fragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+
     private String mParam1;
     private String mParam2;
+
+    EditText et_estimateID, et_custID, et_title, et_desc, et_notes;
+    EditText et_due_date, et_shirt_sizes, et_quantity, et_shop_base_charge;
+    EditText et_per_piece_price, et_screen_charge, et_numColors, et_total_price;
+
+    CheckBox cb_both_sides;
+
+    Button  btn_calculate, btn_save, btn_cancel;
 
     private OnFragmentInteractionListener mListener;
 
@@ -32,15 +35,7 @@ public class New_Estimate_Fragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment New_Estimate_Fragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static New_Estimate_Fragment newInstance(String param1, String param2) {
         New_Estimate_Fragment fragment = new New_Estimate_Fragment();
         Bundle args = new Bundle();
@@ -63,10 +58,50 @@ public class New_Estimate_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_new__estimate, container, false);
+        View view = inflater.inflate(R.layout.fragment_new__estimate, container, false);
+        et_estimateID       = (EditText) view.findViewById(R.id.et_new_estimate_estimateID);
+        et_custID           = (EditText) view.findViewById(R.id.et_new_estimate_custID);
+        et_title            = (EditText) view.findViewById(R.id.et_new_estimate_title);
+        et_desc             = (EditText) view.findViewById(R.id.et_new_estimate_description);
+        et_notes            = (EditText) view.findViewById(R.id.et_new_estimate_notes);
+        et_due_date         = (EditText) view.findViewById(R.id.et_new_estimate_due_date);
+        et_shirt_sizes      = (EditText) view.findViewById(R.id.et_new_estimate_shirt_sizes);
+        et_quantity         = (EditText) view.findViewById(R.id.et_new_estimate_quantity);
+        et_shop_base_charge = (EditText) view.findViewById(R.id.et_new_estimate_shop_base_charge);
+        et_per_piece_price  = (EditText) view.findViewById(R.id.et_new_estimate_per_piece_price);
+        et_screen_charge    = (EditText) view.findViewById(R.id.et_new_estimate_screen_charge);
+        et_numColors        = (EditText) view.findViewById(R.id.et_new_estimate_num_colors);
+        et_total_price      = (EditText) view.findViewById(R.id.et_new_estimate_total_price);
+        cb_both_sides       = (CheckBox) view.findViewById(R.id.cb_new_estimate_both_sides);
+
+        btn_calculate       = (Button) view.findViewById(R.id.btn_new_estimate_calculate);
+        btn_save            = (Button) view.findViewById(R.id.new_estimate_btn_save);
+        btn_cancel          = (Button) view.findViewById(R.id.new_estimate_btn_cancel);
+
+        btn_calculate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        btn_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        btn_calculate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -90,18 +125,7 @@ public class New_Estimate_Fragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

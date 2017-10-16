@@ -9,12 +9,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
+     See README(https://goo.gl/l4GJaQ) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_adb_black_24dp" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+
+        <!--        PERMISSIONS         -->
         <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
         <uses-permission-sdk-23
             android:name="android.permission.READ_EXTERNAL_STORAGE"
             android:maxSdkVersion="18" />
         <uses-permission-sdk-23 android:name="android.permission.STORAGE" />
+        <!--        END PERMISSIONS     -->
 
+        <!--        ACTIVITIES          -->
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,6 +48,14 @@
             android:name=".MainContent"
             android:label="@string/title_activity_estimates"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <!--        END ACTIVITIES       -->
+
+        <service
+            android:name=".FireBaseMessagingServiceHelper">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

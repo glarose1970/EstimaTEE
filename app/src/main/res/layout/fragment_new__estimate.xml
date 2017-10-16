@@ -207,6 +207,7 @@
                 android:inputType="date"
                 android:textSize="16sp"/>
             <CheckBox
+                android:id="@+id/cb_new_estimate_both_sides"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/et_new_estimate_print_both_sides"
@@ -235,6 +236,7 @@
 
             </LinearLayout>
             <Button
+                android:id="@+id/btn_new_estimate_calculate"
                 android:layout_width="20dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
