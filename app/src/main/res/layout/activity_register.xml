@@ -48,7 +48,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/layout_input"
+        android:id="@+id/register_layout_input"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -106,5 +106,6 @@
         </LinearLayout>
 
     </LinearLayout>
+
 
 </RelativeLayout>

@@ -26,12 +26,16 @@ public class MainActivity extends AppCompatActivity {
     final static String TAG = "MainActivity :";
 
     TextView tv_create_acct, tv_forgot_password;
-    LinearLayout layout_input;
+    LinearLayout layout_input, forgot_pass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        layout_input       = (LinearLayout) findViewById(R.id.layout_input);
+        forgot_pass        = (LinearLayout) findViewById(R.id.forgot_pass_layout);
+        tv_create_acct     = (TextView) findViewById(R.id.tv_create_account);
+        tv_forgot_password = (TextView) findViewById(R.id.tv_forgot_password);
         mAuth = FirebaseAuth.getInstance();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -46,10 +50,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        layout_input       = (LinearLayout) findViewById(R.id.layout_input);
-        tv_create_acct     = (TextView) findViewById(R.id.tv_create_account);
-        tv_forgot_password = (TextView) findViewById(R.id.tv_forgot_password);
-
+        forgot_pass.setVisibility(LinearLayout.GONE);
         final EditText et_email = (EditText) findViewById(R.id.et_email);
         final EditText et_password = (EditText) findViewById(R.id.et_password);
 
@@ -72,6 +73,21 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mAuth.signOut();
                 System.exit(0);
+            }
+        });
+
+        tv_create_acct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Register_Activity.class);
+                startActivity(intent);
+            }
+        });
+
+        tv_forgot_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                forgot_pass.setVisibility(LinearLayout.VISIBLE);
             }
         });
     }
