@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.suncoastsoftware.estimateepro.MainActivity"
+    tools:context="com.suncoastsoftware.estimateepro.Register_Activity"
     android:background="@color/default_background">
 
     <LinearLayout
@@ -59,15 +59,21 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Register New User"
+            android:textAlignment="center"
+            android:textSize="24sp" />
         <EditText
-            android:id="@+id/et_email"
+            android:id="@+id/et_register_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/et_email"
             android:inputType="textEmailAddress" />
 
         <EditText
-            android:id="@+id/et_password"
+            android:id="@+id/et_register_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/login_paasword"
@@ -80,8 +86,8 @@
             android:layout_margin="6dp">
 
             <Button
-                android:id="@+id/btn_login"
-                android:text="@string/btn_login"
+                android:id="@+id/btn_register_register"
+                android:text="@string/btn_register"
                 android:layout_marginRight="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,7 +95,7 @@
                 android:background="@drawable/btn_rnd_corners" />
 
             <Button
-                android:id="@+id/btn_cancel"
+                android:id="@+id/btn_register_cancel"
                 android:text="@string/btn_cancel"
                 android:layout_marginLeft="2dp"
                 android:layout_width="match_parent"
@@ -97,35 +103,6 @@
                 android:layout_weight="1"
                 android:background="@drawable/btn_rnd_corners" />
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="6dp"
-            android:layout_marginTop="20dp">
-
-            <TextView
-                android:id="@+id/tv_forgot_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autoLink="web"
-                android:layout_weight="1"
-                android:linksClickable="true"
-                android:text="@string/login_lost_password"
-                android:textColor="@color/colorSecondaryAccent"
-                android:textAlignment="center"/>
-
-            <TextView
-                android:id="@+id/tv_create_account"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autoLink="web"
-                android:layout_weight="1"
-                android:linksClickable="true"
-                android:text="@string/login_create_account"
-                android:textColor="@color/colorSecondaryAccent"
-                android:textAlignment="center" />
         </LinearLayout>
 
     </LinearLayout>

@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -16,13 +18,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     final static String TAG = "MainActivity :";
+
+    TextView tv_create_acct, tv_forgot_password;
+    LinearLayout layout_input;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,17 +39,16 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    Log.i(TAG + user, " Logged In with UID : " + user.getUid());
-                }else {
-                    Log.i(TAG, "Firebase User: Not Logged In");
+                    Log.d(TAG + user, " Logged In with UID : " + user.getUid());
+                } else {
+                    Log.d(TAG, "Firebase User: Not Logged In");
                 }
             }
         };
 
-
-       /* File dir = getFilesDir();
-        File file = new File(dir, "customers.xml");
-        file.delete();*/
+        layout_input       = (LinearLayout) findViewById(R.id.layout_input);
+        tv_create_acct     = (TextView) findViewById(R.id.tv_create_account);
+        tv_forgot_password = (TextView) findViewById(R.id.tv_forgot_password);
 
         final EditText et_email = (EditText) findViewById(R.id.et_email);
         final EditText et_password = (EditText) findViewById(R.id.et_password);
@@ -56,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Valid(et_email.getText().toString()) && Valid((et_password.getText().toString()))) {
-                   Login(et_email.getText().toString(), et_password.getText().toString());
+                if (Valid()) {
+                    Login(et_email.getText().toString(), et_password.getText().toString());
                 } else {
                     Toast.makeText(getApplicationContext(), "All Fields Required!", Toast.LENGTH_LONG).show();
                 }
@@ -68,21 +71,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
+                System.exit(0);
             }
         });
     }
 
-    private void Login(String username, String password) {
+
+    private void Login(final String username, final String password) {
         mAuth.signInWithEmailAndPassword(username, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(!task.isSuccessful()) {
-                            Toast.makeText(MainActivity.this, "Unable to Login!!!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "No Account matches the email provided, if you did not create an account , use the [create account] button to create an account!", Toast.LENGTH_SHORT).show();
 
                         }else {
-                            String token = FirebaseInstanceId.getInstance().getToken();
-                            Log.d("NOTIFICATION TOKEN - ", "TOKEN : " + token);
+                           
                             Intent intent = new Intent(getApplicationContext(), MainContent.class);
                             startActivity(intent);
                         }
@@ -91,12 +95,32 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private boolean Valid(String input) {
+    //creates a new user in firebase with email and password
+    private void CreateAccount(final String email, final String password) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(!task.isSuccessful()) {
+                            Toast.makeText(MainActivity.this, "Unable to Create Account!!!", Toast.LENGTH_SHORT).show();
 
-        if (TextUtils.isEmpty(input)) {
-            return false;
-        }else
-            return true;
+                        }else {
+                            Login(email, password);
+                        }
+                    }
+                });
+    }
 
+    private boolean Valid() {
+
+       for (int i = 0; i < layout_input.getChildCount(); i++) {
+            View v = layout_input.getChildAt(i);
+           if (v instanceof  EditText) {
+               if (TextUtils.isEmpty(((EditText) v).getText().toString())) {
+                   return false;
+               }
+           }
+        }
+        return true;
     }
 }

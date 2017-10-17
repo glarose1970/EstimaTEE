@@ -8,6 +8,7 @@
     <string name="btn_search">Search</string>
     <string name="btn_generate">Generate</string>
     <string name="btn_new_estimate">New Estimate</string>
+    <string name="btn_register">Register</string>
     <string name="login_email">Email</string>
     <string name="login_paasword">Password</string>
     <string name="login_bottom_img">bottom img</string>

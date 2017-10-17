@@ -31,7 +31,6 @@ public class MainContent extends AppCompatActivity {
     List<String> company_list;
 
     List<Estimate> estimate_list;
-   // private TextView mTextMessage;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -40,9 +39,11 @@ public class MainContent extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_estimate:
-                   // mTextMessage.setText(R.string.title_home);
-                    Intent mainIntent = new Intent(MainContent.this, MainContent.class);
-                    startActivity(mainIntent);
+
+                    Load_Estimates_Fragment loadEstimates = new Load_Estimates_Fragment();
+                    android.support.v4.app.FragmentTransaction loadEstimatesTransaction = getSupportFragmentManager().beginTransaction();
+                    loadEstimatesTransaction.replace(R.id.content, loadEstimates);
+                    loadEstimatesTransaction.commit();
                     return true;
                 case R.id.navigation_new_customer:
                    // mTextMessage.setText(R.string.title_dashboard);
