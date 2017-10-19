@@ -150,7 +150,8 @@ public class New_Estimate_Fragment extends Fragment implements View.OnClickListe
                             et_notes.getText().toString(), Long.valueOf(et_quantity.getText().toString()), Double.parseDouble(et_total_price.getText().toString()), Double.parseDouble(et_per_piece_price.getText().toString()),
                             Double.parseDouble(et_shop_base_charge.getText().toString()), Double.parseDouble(et_screen_charge.getText().toString()), Integer.valueOf(et_numColors.getText().toString()),
                                     et_due_date.getText().toString(), et_shirt_sizes.getText().toString(), cb_both_sides.isChecked());
-                    ref.child("users").child(user.getUid()).child("customers").child(estimate.getCustID()).child("estimates").child(estimate.getEstimateID()).setValue(estimate);
+                    ref.child("users").child(user.getUid()).child("customers").child(estimate.getCustID()).child("estimates").child(estimate.getEstimateID()).push().setValue(estimate);
+
                 }
                 break;
             case R.id.new_estimate_btn_cancel:

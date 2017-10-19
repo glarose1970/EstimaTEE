@@ -1,6 +1,5 @@
 package com.suncoastsoftware.estimateepro;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -112,12 +111,6 @@ public class MainContent extends AppCompatActivity {
         return company_list;
     }
 
-    private Intent NewCustomerIntent() {
-        Intent newCustIntent = new Intent(this.getApplicationContext(), Activity_New_Customer.class);
-        this.startActivity(newCustIntent);
-
-        return newCustIntent;
-    }
 
     private List<Estimate> LoadEstimates() {
 

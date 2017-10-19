@@ -43,13 +43,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity_New_Customer"
-            android:label="Add New Customer" />
-        <activity
-            android:name=".Activity_New_Estimate"
-            android:label="New Estimate"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".MainContent"
             android:label="@string/title_activity_estimates"
             android:theme="@style/AppTheme.NoActionBar" />

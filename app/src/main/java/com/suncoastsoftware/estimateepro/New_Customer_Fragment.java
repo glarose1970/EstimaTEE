@@ -13,9 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.suncoastsoftware.estimateepro.controller.DBCustomerHelper;
 import com.suncoastsoftware.estimateepro.model.Customer;
 
 import java.util.Random;
@@ -45,6 +45,8 @@ public class New_Customer_Fragment extends Fragment {
     DatabaseReference ref;
     private FirebaseAuth mAuth;
 
+    DBCustomerHelper dbCustHelper;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -55,14 +57,6 @@ public class New_Customer_Fragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment New_Customer_Fragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static New_Customer_Fragment newInstance(String param1, String param2) {
         New_Customer_Fragment fragment = new New_Customer_Fragment();
@@ -82,6 +76,7 @@ public class New_Customer_Fragment extends Fragment {
         }
 
         mAuth = FirebaseAuth.getInstance();
+        dbCustHelper = new DBCustomerHelper(getContext());
 
     }
 
@@ -108,16 +103,11 @@ public class New_Customer_Fragment extends Fragment {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    Customer cust = new Customer(et_company.getText().toString(), et_custID.getText().toString(), et_contactName.getText().toString(), et_phone.getText().toString());
-                    database = FirebaseDatabase.getInstance();
-                    ref = database.getReference();
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    ref.child("users").child(user.getUid()).child("customers").child(cust.customerID).setValue(cust);
-                    Toast.makeText(getActivity(), "Customer Saved!!!!", Toast.LENGTH_LONG).show();
-                }catch (Exception e) {
-                    Toast.makeText(getActivity(), "Failed to save xml!", Toast.LENGTH_LONG).show();
-                }
+
+                Customer cust = new Customer(et_company.getText().toString(), et_custID.getText().toString(), et_contactName.getText().toString(), et_phone.getText().toString());
+                addCustomer(cust.getCustomerID(), cust.getCompanyName(), cust.getContactName(), cust.getPhone());
+                //glarosa001@tampabay.rr.com    451145glToast.makeText(getActivity(), "Failed to save xml!", Toast.LENGTH_LONG).show();
+
 
 
             }
@@ -131,6 +121,17 @@ public class New_Customer_Fragment extends Fragment {
         });
 
         return view;
+    }
+    private void addCustomer(String id, String customerName, String contact, String phone) {
+
+        boolean insertData = dbCustHelper.addData(id, customerName,contact, phone);
+
+        if (insertData) {
+            Toast.makeText(getActivity(), "Customer Saved!!!!", Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(getActivity(), "Customer Not Saved!!!!", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
