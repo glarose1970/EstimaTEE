@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     final static String TAG = "MainActivity :";
 
     TextView tv_create_acct, tv_forgot_password;
+    EditText forgot_pass_email;
+    Button btn_send;
     LinearLayout layout_input, forgot_pass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         forgot_pass        = (LinearLayout) findViewById(R.id.forgot_pass_layout);
         tv_create_acct     = (TextView) findViewById(R.id.tv_create_account);
         tv_forgot_password = (TextView) findViewById(R.id.tv_forgot_password);
+        forgot_pass_email  = (EditText) findViewById(R.id.et_forgot_pass_email);
         mAuth = FirebaseAuth.getInstance();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -54,8 +57,9 @@ public class MainActivity extends AppCompatActivity {
         final EditText et_email = (EditText) findViewById(R.id.et_email);
         final EditText et_password = (EditText) findViewById(R.id.et_password);
 
-        Button btn_login = (Button) findViewById(R.id.btn_login);
+        Button btn_login  = (Button) findViewById(R.id.btn_login);
         Button btn_cancel = (Button) findViewById(R.id.btn_cancel);
+        btn_send          = (Button) findViewById(R.id.btn_lost_pass_send);
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +92,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 forgot_pass.setVisibility(LinearLayout.VISIBLE);
+            }
+        });
+
+        btn_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().sendPasswordResetEmail(forgot_pass_email.getText().toString())
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(MainActivity.this, "Email Sent!!", Toast.LENGTH_LONG).show();
+                                    forgot_pass.setVisibility(LinearLayout.GONE);
+                                }
+                            }
+                        });
             }
         });
     }

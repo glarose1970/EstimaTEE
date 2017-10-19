@@ -11,6 +11,8 @@ public class Estimate {
 	public String title = "";
 	public String description = "";
 	public String notes = "";
+	public String due_date = "";
+	public String shirt_sizes = "";
 
 	public long quantity;
 	public double total_price;
@@ -18,10 +20,6 @@ public class Estimate {
 	public double shop_base_charge;
 	public double screen_charge;
 	public int num_colors;
-
-	public String due_date = "";
-
-	public String shirt_sizes = "";
 
 	public boolean both_sides;
 

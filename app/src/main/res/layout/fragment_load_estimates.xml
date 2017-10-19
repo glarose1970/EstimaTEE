@@ -3,46 +3,76 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.suncoastsoftware.estimateepro.Load_Estimates_Fragment">
+    tools:context="com.suncoastsoftware.estimateepro.Load_Estimates_Fragment"
+    android:background="@drawable/gradient_background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="20dp">
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/gradient_background">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="238dp"
                 android:layout_height="54dp"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="10dp"
                 android:background="@android:color/transparent"
                 android:scaleType="centerCrop"
                 android:layout_gravity="center_horizontal"
                 android:src="@mipmap/ic_launcher"
                 android:contentDescription="@string/logo" />
 
-            <TextView
-                android:id="@+id/textView"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Load Estimates Fragment"
-                />
+                android:orientation="vertical"
+                android:layout_marginTop="75dp">
+
+
+                <Spinner
+                    android:id="@+id/load_estimates_spinner_company"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/load_estimates_et_search_company"
+                        android:hint="Company Name"
+                        android:layout_weight="1"
+                        />
+
+                    <Button
+                        android:layout_width="175dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/btn_search"
+                        android:id="@+id/load_estimate_btn_search"/>
+
+                </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/load_estimates_recView"
+                    android:layout_marginTop="20dp"
+                    android:padding="10dp"/>
+            </LinearLayout>
+
         </FrameLayout>
-
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/login_bottom_img" />
 
 
     </LinearLayout>

@@ -92,13 +92,13 @@ public class MainContent extends AppCompatActivity {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 for (DataSnapshot child : children) {
                     //find the companyName node and add it to the cust_list.
-                    Iterable<DataSnapshot>  custChild = child.getChildren();
-                    for (DataSnapshot curChild : custChild) {
-                        Customer cust = curChild.getValue(Customer.class);
+                   // Iterable<DataSnapshot>  custChild = child.getChildren();
+                  //  for (DataSnapshot curChild : custChild) {
+                        Customer cust = child.getValue(Customer.class);
                         String company = cust.companyName;
                         cust_list.add(cust);
                         company_list.add(company);
-                    }
+                   // }
                 }
 
             }
