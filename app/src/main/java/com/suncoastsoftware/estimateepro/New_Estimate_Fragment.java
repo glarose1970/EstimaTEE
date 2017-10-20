@@ -1,5 +1,6 @@
 package com.suncoastsoftware.estimateepro;
 
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,11 +20,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.suncoastsoftware.estimateepro.controller.DBCustomerHelper;
 import com.suncoastsoftware.estimateepro.model.Customer;
 import com.suncoastsoftware.estimateepro.model.Estimate;
 
@@ -40,8 +37,8 @@ public class New_Estimate_Fragment extends Fragment implements View.OnClickListe
 
 
     // reference the Firebase Database
-    private FirebaseDatabase database;
-    private DatabaseReference ref;
+   // DBEstimateHelper dbHelper;
+    DBCustomerHelper dbCustHelper;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
 
@@ -83,10 +80,9 @@ public class New_Estimate_Fragment extends Fragment implements View.OnClickListe
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
+      //  dbHelper = new DBEstimateHelper(getActivity());
+        dbCustHelper = new DBCustomerHelper(getActivity());
         mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-        ref = database.getReference();
         user = mAuth.getCurrentUser();
         custList = new ArrayList<>();
         new LoadCustomers().execute();
@@ -125,8 +121,7 @@ public class New_Estimate_Fragment extends Fragment implements View.OnClickListe
         companySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String[] values = companySpinner.getSelectedItem().toString().split(":");
-                custID = values[1];
+
             }
 
             @Override
@@ -150,8 +145,11 @@ public class New_Estimate_Fragment extends Fragment implements View.OnClickListe
                             et_notes.getText().toString(), Long.valueOf(et_quantity.getText().toString()), Double.parseDouble(et_total_price.getText().toString()), Double.parseDouble(et_per_piece_price.getText().toString()),
                             Double.parseDouble(et_shop_base_charge.getText().toString()), Double.parseDouble(et_screen_charge.getText().toString()), Integer.valueOf(et_numColors.getText().toString()),
                                     et_due_date.getText().toString(), et_shirt_sizes.getText().toString(), cb_both_sides.isChecked());
-                    ref.child("users").child(user.getUid()).child("customers").child(estimate.getCustID()).child("estimates").child(estimate.getEstimateID()).push().setValue(estimate);
 
+                  /*  dbHelper.addData(estimate.getCustID(), estimate.getEstimateID(), estimate.getTitle(), estimate.getDescription(),
+                            estimate.getNotes(), estimate.getQuantity(), estimate.getTotal_price(), estimate.getPer_piece_price(),
+                            estimate.getShop_base_charge(), estimate.getScreen_charge(), estimate.getNum_colors(), estimate.getDue_date(),
+                            estimate.getShirt_size(), estimate.isBoth_sides());*/
                 }
                 break;
             case R.id.new_estimate_btn_cancel:
@@ -210,7 +208,7 @@ public class New_Estimate_Fragment extends Fragment implements View.OnClickListe
                    if (childView instanceof  EditText) {
                        String curString =  ((EditText)childView).getText().toString();
                        if (TextUtils.isEmpty(curString)) {
-                          // Toast.makeText(getContext(), "Text ID " + childView.getId(), Toast.LENGTH_LONG).show();
+                          Toast.makeText(getContext(), "Fields Required" + ((EditText) childView).getHint(), Toast.LENGTH_LONG).show();
                            return false;
                        }
                    }
@@ -231,27 +229,16 @@ public class New_Estimate_Fragment extends Fragment implements View.OnClickListe
         @Override
         protected Void doInBackground(Void... params) {
 
-            ref.child("users").child(user.getUid()).child("customers").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                    for (DataSnapshot child : children) {
-                        //find the companyName node and add it to the cust_list.
-                       // Iterable<DataSnapshot> custChild = child.getChildren();
-                       // for (DataSnapshot data : custChild) {
-                            Customer cust = child.getValue(Customer.class);
-                            String company = cust.companyName;
-                            String cID = cust.getCustomerID();
-                            custList.add(company + " : " + cID);
-                       // }
-                    }
-                }
+            Cursor data = dbCustHelper.getData();
+            while(data.moveToNext()) {
+                //TODO change Customer to Estimate
+                Customer cust = new Customer(data.getString(2), data.getString(1), data.getString(3), data.getString(4));
+                String company = cust.companyName;
+                String cID = cust.getCustomerID();
+                custList.add(company);
+            }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
 
-                }
-            });
             return null;
         }
 

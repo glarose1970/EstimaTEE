@@ -1,5 +1,7 @@
 package com.suncoastsoftware.estimateepro;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.suncoastsoftware.estimateepro.controller.DBCustomerHelper;
 import com.suncoastsoftware.estimateepro.model.Customer;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -52,7 +55,7 @@ public class New_Customer_Fragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
+    private Context context;
     public New_Customer_Fragment() {
         // Required empty public constructor
     }
@@ -75,8 +78,9 @@ public class New_Customer_Fragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        context = getActivity();
         mAuth = FirebaseAuth.getInstance();
-        dbCustHelper = new DBCustomerHelper(getContext());
+        dbCustHelper = new DBCustomerHelper(context);
 
     }
 
@@ -106,7 +110,7 @@ public class New_Customer_Fragment extends Fragment {
 
                 Customer cust = new Customer(et_company.getText().toString(), et_custID.getText().toString(), et_contactName.getText().toString(), et_phone.getText().toString());
                 addCustomer(cust.getCustomerID(), cust.getCompanyName(), cust.getContactName(), cust.getPhone());
-                //glarosa001@tampabay.rr.com    451145glToast.makeText(getActivity(), "Failed to save xml!", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity(), "Failed to save xml!", Toast.LENGTH_LONG).show();
 
 
 
@@ -116,7 +120,7 @@ public class New_Customer_Fragment extends Fragment {
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                getData();
             }
         });
 
@@ -124,14 +128,31 @@ public class New_Customer_Fragment extends Fragment {
     }
     private void addCustomer(String id, String customerName, String contact, String phone) {
 
+
         boolean insertData = dbCustHelper.addData(id, customerName,contact, phone);
 
-        if (insertData) {
-            Toast.makeText(getActivity(), "Customer Saved!!!!", Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(getActivity(), "Customer Not Saved!!!!", Toast.LENGTH_LONG).show();
+        try {
+            if (insertData) {
+                Toast.makeText(getActivity(), "Customer Saved!!!!", Toast.LENGTH_LONG).show();
+
+            }else {
+                Toast.makeText(getActivity(), "Customer Not Saved!!!!", Toast.LENGTH_LONG).show();
+
+            }
+        }catch (Exception e) {
+            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+
         }
 
+    }
+
+    private void getData() {
+        Cursor data = dbCustHelper.getData();
+        ArrayList<String> dataList = new ArrayList<>();
+        while (data.moveToNext()) {
+            Customer cust = new Customer(data.getString(2), data.getString(1), data.getString(3), data.getString(4));
+            String test = "";
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
