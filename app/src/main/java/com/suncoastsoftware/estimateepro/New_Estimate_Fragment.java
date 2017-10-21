@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.suncoastsoftware.estimateepro.controller.DBCustomerHelper;
+import com.suncoastsoftware.estimateepro.controller.DBEstimateHelper;
 import com.suncoastsoftware.estimateepro.model.Customer;
 import com.suncoastsoftware.estimateepro.model.Estimate;
 
@@ -37,7 +38,7 @@ public class New_Estimate_Fragment extends Fragment implements View.OnClickListe
 
 
     // reference the Firebase Database
-   // DBEstimateHelper dbHelper;
+    DBEstimateHelper dbestimateHelper;
     DBCustomerHelper dbCustHelper;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
@@ -82,6 +83,7 @@ public class New_Estimate_Fragment extends Fragment implements View.OnClickListe
         }
       //  dbHelper = new DBEstimateHelper(getActivity());
         dbCustHelper = new DBCustomerHelper(getActivity());
+        dbestimateHelper = new DBEstimateHelper(getActivity());
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         custList = new ArrayList<>();
@@ -121,7 +123,7 @@ public class New_Estimate_Fragment extends Fragment implements View.OnClickListe
         companySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                custID = companySpinner.getSelectedItem().toString();
             }
 
             @Override
@@ -140,17 +142,19 @@ public class New_Estimate_Fragment extends Fragment implements View.OnClickListe
         switch (v.getId()) {
             case R.id.new_estimate_btn_save:
                 if (Validate_Input()) {
-                    Toast.makeText(getContext(), "All Good!!", Toast.LENGTH_LONG).show();
-                    Estimate estimate = new Estimate(custID, et_estimateID.getText().toString(),et_title.getText().toString(), et_desc.getText().toString(),
+
+                    Estimate estimate = new Estimate(et_estimateID.getText().toString(), custID, et_title.getText().toString(), et_desc.getText().toString(),
                             et_notes.getText().toString(), Long.valueOf(et_quantity.getText().toString()), Double.parseDouble(et_total_price.getText().toString()), Double.parseDouble(et_per_piece_price.getText().toString()),
                             Double.parseDouble(et_shop_base_charge.getText().toString()), Double.parseDouble(et_screen_charge.getText().toString()), Integer.valueOf(et_numColors.getText().toString()),
                                     et_due_date.getText().toString(), et_shirt_sizes.getText().toString(), cb_both_sides.isChecked());
 
-                  /*  dbHelper.addData(estimate.getCustID(), estimate.getEstimateID(), estimate.getTitle(), estimate.getDescription(),
+                    dbestimateHelper.addData(estimate.getEstimateID(), custID, estimate.getTitle(), estimate.getDescription(),
                             estimate.getNotes(), estimate.getQuantity(), estimate.getTotal_price(), estimate.getPer_piece_price(),
                             estimate.getShop_base_charge(), estimate.getScreen_charge(), estimate.getNum_colors(), estimate.getDue_date(),
-                            estimate.getShirt_size(), estimate.isBoth_sides());*/
+                            estimate.getShirt_size(), estimate.isBoth_sides());
+                    ClearInput();
                 }
+
                 break;
             case R.id.new_estimate_btn_cancel:
 
@@ -218,6 +222,25 @@ public class New_Estimate_Fragment extends Fragment implements View.OnClickListe
 
         }
         return true;
+    }
+
+    private void ClearInput() {
+        ViewGroup layout = (ViewGroup) getView().findViewById(R.id.new_estimate_layout_input);
+
+        for (int i = 0; i < layout.getChildCount(); i++) {
+            View view = layout.getChildAt(i);
+            if (view instanceof LinearLayout) {
+                for (int y = 0;y < ((ViewGroup)view).getChildCount(); y++) {
+                    View childView = ((LinearLayout)view).getChildAt(y);
+                    if (childView instanceof  EditText) {
+                        ((EditText)childView).setText("");
+
+                    }
+                }
+
+            }
+
+        }
     }
 
     class LoadCustomers extends AsyncTask<Void, Integer, Void> {

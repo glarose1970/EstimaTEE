@@ -1,28 +1,28 @@
 package com.suncoastsoftware.estimateepro;
 
 import android.app.ProgressDialog;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.suncoastsoftware.estimateepro.adapter.EstimatesRecyclerAdapter;
+import com.suncoastsoftware.estimateepro.controller.DBCustomerHelper;
+import com.suncoastsoftware.estimateepro.controller.DBEstimateHelper;
 import com.suncoastsoftware.estimateepro.model.Customer;
+import com.suncoastsoftware.estimateepro.model.Estimate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,22 +34,19 @@ public class Load_Estimates_Fragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final String TAG        = "Load_Customers : ";
 
+    DBCustomerHelper dbCustHelper;
+
     private List<String> companyList;
+    private List<Estimate> estimate_list;
 
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    FirebaseUser user;
-
-    private FirebaseDatabase database;
-    private DatabaseReference custRef;
-    private DatabaseReference estimateRef;
-
+    private RecyclerView recView;
+    private EstimatesRecyclerAdapter recViewAdapter;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    private int custID;
+    private String custID;
 
     private OnFragmentInteractionListener mListener;
 
@@ -78,25 +75,9 @@ public class Load_Estimates_Fragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-        custRef = database.getReference();
-        user = mAuth.getCurrentUser();
+        dbCustHelper = new DBCustomerHelper(getActivity());
         companyList = new ArrayList<>();
-
-
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-
-                if (user != null) {
-                    Log.d(TAG + user, " Logged In with UID : " + user.getUid());
-                } else {
-                    Log.d(TAG, "Firebase User: Not Logged In");
-                }
-            }
-        };
+        estimate_list = new ArrayList<>();
 
         new LoadCustomers().execute();
 
@@ -107,18 +88,38 @@ public class Load_Estimates_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_load_estimates, container, false);
+        recView = (RecyclerView) v.findViewById(R.id.load_estimates_recView);
         companySpinner = (Spinner) v.findViewById(R.id.load_estimates_spinner_company);
         et_company     = (EditText) v.findViewById(R.id.load_estimates_et_search_company);
         btn_search     = (Button) v.findViewById(R.id.load_estimate_btn_search);
 
+        companySpinner.setSelection(-1);
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                custID = companySpinner.getSelectedItem().toString();
+                new LoadEstimates().execute();
+
                for (int i = 0; i < companySpinner.getCount(); i++) {
                    if (companySpinner.getItemAtPosition(i).toString().equalsIgnoreCase(et_company.getText().toString())) {
                        companySpinner.setSelection(i);
+
                    }
                }
+            }
+        });
+        companySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                estimate_list.clear();
+                custID = companySpinner.getSelectedItem().toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
@@ -158,41 +159,29 @@ public class Load_Estimates_Fragment extends Fragment {
 
         ProgressDialog progress = new ProgressDialog(getContext());
         public LoadCustomers() {
+            companyList = new ArrayList<>();
         }
 
         @Override
         protected Void doInBackground(Void... params) {
 
-            custRef.child("users").child(user.getUid()).child("customers").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                    for (DataSnapshot child : children) {
-                        //find the companyName node and add it to the cust_list.
-                       // Iterable<DataSnapshot> custChild = child.getChildren();
-                       // for (DataSnapshot data : custChild) {
-                            Customer cust = child.getValue(Customer.class);
-                            String company = cust.companyName;
-                            companyList.add(company);
-                        //}
-                    }
-                }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
+            Cursor data =  dbCustHelper.getData();
+            while(data.moveToNext()) {
+                Customer cust = new Customer(data.getString(2), data.getString(1), data.getString(3), data.getString(4));
+                String company = cust.companyName;
+                companyList.add(company);
+            }
             return null;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progress.setTitle("Loading Companies!!");
+        /*    progress.setTitle("Loading Companies!!");
             progress.setIndeterminate(true);
             progress.setProgress(0);
-            progress.show();
+            progress.show();*/
         }
 
         @Override
@@ -201,34 +190,29 @@ public class Load_Estimates_Fragment extends Fragment {
             ArrayAdapter<String> spinAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, companyList);
             spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             companySpinner.setAdapter(spinAdapter);
-            progress.dismiss();
+           // progress.dismiss();
         }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            progress.setProgress(values[0]);
+           // progress.setProgress(values[0]);
         }
     }
 
     class LoadEstimates extends AsyncTask<String, Integer, Void> {
 
-        ProgressDialog pDialog = new ProgressDialog(getContext());
+        ProgressDialog pDialog = new ProgressDialog(getActivity());
+        DBEstimateHelper dbEstimateHelper = new DBEstimateHelper(getActivity());
 
         @Override
         protected Void doInBackground(String... params) {
+            Cursor data = dbEstimateHelper.Search(custID);
+            while (data.moveToNext()) {
+                Estimate estimate = new Estimate(data.getString(3), data.getString(2), data.getString(4), data.getDouble(8));
+                estimate_list.add(estimate);
+            }
 
-            estimateRef.child("users").child(user.getUid()).child("customers").child("estimates").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
             return null;
         }
 
@@ -236,13 +220,21 @@ public class Load_Estimates_Fragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog.setTitle("Loading Estimates...");
+            pDialog.setMessage("Loading...");
+            pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             pDialog.setIndeterminate(true);
+            pDialog.setProgress(0);
             pDialog.show();
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            recViewAdapter = new EstimatesRecyclerAdapter(getContext(), estimate_list);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+            recView.setLayoutManager(mLayoutManager);
+            recView.setItemAnimator(new DefaultItemAnimator());
+            recView.setAdapter(recViewAdapter);
             pDialog.dismiss();
         }
 

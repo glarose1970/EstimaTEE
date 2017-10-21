@@ -15,10 +15,11 @@ public class DBEstimateHelper extends SQLiteOpenHelper{
 
     private static final String TAG = "DBEstimateHelper";
     private static final String DATABASE_NAME = "estimatee_data";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String TABLE_NAME = "estimates_table";
     private static final String COL_CUST_ID = "CUST_ID";
     private static final String COL_ESTIMATE_ID = "ESTIMATE_ID";
+    private static final String COL_CUSTOMER_NAME = "CUSTOMER_NAME";
     private static final String COL_TITLE = "TITLE";
     private static final String COL_DESC = "DESC";
     private static final String COL_NOTES = "NOTES";
@@ -40,7 +41,7 @@ public class DBEstimateHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COL_CUST_ID + " TEXT, " + COL_ESTIMATE_ID + " TEXT, " + COL_TITLE + " TEXT, " + COL_DESC + " TEXT, " +
+                COL_CUST_ID + " TEXT, " + COL_ESTIMATE_ID + " TEXT, " + COL_CUSTOMER_NAME + " TEXT, " + COL_TITLE + " TEXT, " + COL_DESC + " TEXT, " +
                 COL_NOTES + " TEXT, " + COL_QUANTITY + " LONG, " + COL_TOTAL_PRICE + " DOUBLE, " + COL_PER_PIECE_PRICE + " DOUBLE, " +
                 COL_SHOP_BASE_CHARGE + " DOUBLE, " + COL_SCREEN_CHARGE + " DOUBLE, " + COL_NUM_COLORS + " INT, " + COL_DUE_DATE + " TEXT, " +
                 COL_SHIRT_SIZES + " TEXT, " + COL_BOTH_SIDES + " BOOLEAN)";
@@ -49,18 +50,20 @@ public class DBEstimateHelper extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP IF TABLE EXISTS " + TABLE_NAME);
-        onCreate(db);
+      db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+      onCreate(db);
+
     }
 
-    public boolean addData(String custID, String estimateID, String title, String desc, String notes,
+    public boolean addData(String estimateID, String customerName, String title, String desc, String notes,
                             long quantity, double totalPrice, double perPiecePrice, double shopBaseCharge,
                            double screenCharge, int numColors, String dueDate, String shirtSizes, boolean bothSides) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COL_CUST_ID, custID);
+       // values.put(COL_CUST_ID, custID);
         values.put(COL_ESTIMATE_ID, estimateID);
+        values.put(COL_CUSTOMER_NAME, customerName);
         values.put(COL_TITLE, title);
         values.put(COL_DESC, desc);
         values.put(COL_NOTES, notes);
@@ -89,5 +92,19 @@ public class DBEstimateHelper extends SQLiteOpenHelper{
         String query = "SELECT * FROM " + TABLE_NAME;
         Cursor data = db.rawQuery(query, null);
         return data;
+    }
+
+    public Cursor Search(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] whereArgs = new String[]{id};
+        //String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL_CUST_ID + " = " + id ;
+        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_CUSTOMER_NAME + " = ?", whereArgs);
+        return data;
+
+    }
+
+    public void Delete() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, null, null);
     }
 }

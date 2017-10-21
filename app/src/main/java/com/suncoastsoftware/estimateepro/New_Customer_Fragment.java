@@ -23,15 +23,6 @@ import com.suncoastsoftware.estimateepro.model.Customer;
 import java.util.ArrayList;
 import java.util.Random;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link New_Customer_Fragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link New_Customer_Fragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class New_Customer_Fragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -81,7 +72,7 @@ public class New_Customer_Fragment extends Fragment {
         context = getActivity();
         mAuth = FirebaseAuth.getInstance();
         dbCustHelper = new DBCustomerHelper(context);
-
+        //dbCustHelper.Delete();
     }
 
     @Override
@@ -108,11 +99,12 @@ public class New_Customer_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Customer cust = new Customer(et_company.getText().toString(), et_custID.getText().toString(), et_contactName.getText().toString(), et_phone.getText().toString());
-                addCustomer(cust.getCustomerID(), cust.getCompanyName(), cust.getContactName(), cust.getPhone());
-                //Toast.makeText(getActivity(), "Failed to save xml!", Toast.LENGTH_LONG).show();
-
-
+                if (Validate_Input()) {
+                    Customer cust = new Customer(et_company.getText().toString(), et_custID.getText().toString(), et_contactName.getText().toString(), et_phone.getText().toString());
+                    addCustomer(cust.getCustomerID(), cust.getCompanyName(), cust.getContactName(), cust.getPhone());
+                }else {
+                    Toast.makeText(getActivity(), "Customer Save Error!!", Toast.LENGTH_LONG).show();
+                }
 
             }
         });
@@ -127,8 +119,6 @@ public class New_Customer_Fragment extends Fragment {
         return view;
     }
     private void addCustomer(String id, String customerName, String contact, String phone) {
-
-
         boolean insertData = dbCustHelper.addData(id, customerName,contact, phone);
 
         try {

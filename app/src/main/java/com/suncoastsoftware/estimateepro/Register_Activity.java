@@ -72,6 +72,7 @@ public class Register_Activity extends AppCompatActivity {
                             Toast.makeText(Register_Activity.this, "Unable to Create Account!!!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
                         }else {
+                            Toast.makeText(Register_Activity.this, "Account Created!!!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                         }

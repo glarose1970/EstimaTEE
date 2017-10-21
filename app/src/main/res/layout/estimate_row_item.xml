@@ -14,6 +14,7 @@
     app:cardCornerRadius="8dp"
     app:cardElevation="12dp"
     android:padding="10dp"
+    android:background="@color/colorSecondaryAccent"
 
     >
 
@@ -31,7 +32,7 @@
 
                 <TextView
                     android:id="@+id/row_item_tv_estimate_id"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/estimates_estimateID"
                     android:padding="6dp"
@@ -39,10 +40,10 @@
                    />
 
                 <TextView
-                    android:id="@+id/row_item_tv_company_name"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/row_item_tv_company_id"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/et_new_cust_company"
+                    android:text="@string/et_new_cust_company_id"
                     android:padding="6dp"
                     android:layout_weight="1"/>
 

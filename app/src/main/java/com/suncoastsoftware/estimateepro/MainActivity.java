@@ -122,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "No Account matches the email provided, if you did not create an account , use the [create account] button to create an account!", Toast.LENGTH_SHORT).show();
 
                         }else {
-                           
                             Intent intent = new Intent(getApplicationContext(), MainContent.class);
                             startActivity(intent);
                         }

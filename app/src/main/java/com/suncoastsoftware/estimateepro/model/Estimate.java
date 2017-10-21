@@ -7,6 +7,7 @@ package com.suncoastsoftware.estimateepro.model;
 public class Estimate {
 
 	public String custID = "";
+	public String custName = "";
 	public String estimateID = "";
 	public String title = "";
 	public String description = "";
@@ -26,13 +27,21 @@ public class Estimate {
 	public Estimate() {
 	}
 
-	public Estimate(String custID, String estimateID, String title, String description,
+	public Estimate(String custname, String estimateID, String title, double price) {
+		this.custName = custname;
+		this.estimateID = estimateID;
+		this.title = title;
+		this.total_price = price;
+	}
+
+	public Estimate(String estimateID, String custname, String title, String description,
 					String notes, long quantity, double total_price, double per_piece_price,
 					double shop_base_charge, double screen_charge, int num_colors,
 					String due_date, String shirt_sizes, boolean both_sides) {
 
 		this.custID = custID;
 		this.estimateID = estimateID;
+		this.custName = custname;
 		this.title = title;
 		this.description = description;
 		this.notes = notes;
@@ -57,6 +66,14 @@ public class Estimate {
 
 	public String getEstimateID() {
 		return estimateID;
+	}
+
+	public String getCustName() {
+		return custName;
+	}
+
+	public void setCustName(String custName) {
+		this.custName = custName;
 	}
 
 	public void setEstimateID(String estimateID) {
