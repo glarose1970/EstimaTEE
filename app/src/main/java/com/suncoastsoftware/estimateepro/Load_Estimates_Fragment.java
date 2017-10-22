@@ -97,14 +97,15 @@ public class Load_Estimates_Fragment extends Fragment {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //companyList.clear();
                 custID = companySpinner.getSelectedItem().toString();
-                new LoadEstimates().execute();
+
 
                for (int i = 0; i < companySpinner.getCount(); i++) {
                    if (companySpinner.getItemAtPosition(i).toString().equalsIgnoreCase(et_company.getText().toString())) {
                        companySpinner.setSelection(i);
-
+                     //  custID = et_company.getText().toString();
+                       new LoadEstimates().execute();
                    }
                }
             }
@@ -115,6 +116,9 @@ public class Load_Estimates_Fragment extends Fragment {
                 estimate_list.clear();
                 custID = companySpinner.getSelectedItem().toString();
 
+                new LoadEstimates().execute();
+                et_company.setText("");
+
             }
 
             @Override
@@ -122,6 +126,7 @@ public class Load_Estimates_Fragment extends Fragment {
 
             }
         });
+
 
         return v;
     }
@@ -219,12 +224,12 @@ public class Load_Estimates_Fragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog.setTitle("Loading Estimates...");
+           /* pDialog.setTitle("Loading Estimates...");
             pDialog.setMessage("Loading...");
             pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             pDialog.setIndeterminate(true);
             pDialog.setProgress(0);
-            pDialog.show();
+            pDialog.show();*/
         }
 
         @Override
@@ -235,13 +240,13 @@ public class Load_Estimates_Fragment extends Fragment {
             recView.setLayoutManager(mLayoutManager);
             recView.setItemAnimator(new DefaultItemAnimator());
             recView.setAdapter(recViewAdapter);
-            pDialog.dismiss();
+           // pDialog.dismiss();
         }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            pDialog.setProgress(values[0]);
+           // pDialog.setProgress(values[0]);
         }
     }
 }

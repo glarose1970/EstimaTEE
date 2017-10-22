@@ -103,7 +103,7 @@ public class New_Customer_Fragment extends Fragment {
                     Customer cust = new Customer(et_company.getText().toString(), et_custID.getText().toString(), et_contactName.getText().toString(), et_phone.getText().toString());
                     addCustomer(cust.getCustomerID(), cust.getCompanyName(), cust.getContactName(), cust.getPhone());
                 }else {
-                    Toast.makeText(getActivity(), "Customer Save Error!!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Customer Save Error!!\r\n All Fields Required!", Toast.LENGTH_LONG).show();
                 }
 
             }
